@@ -24,6 +24,6 @@ namespace Biendeo::AdventOfCode2017::Day1 {
 		int sum;
 
 		/// Calculates the sum and returns it as a value. This doesn't cache it.
-		int calculateSum();
+		int CalculateSum();
 	};
 }

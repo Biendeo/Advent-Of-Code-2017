@@ -1,4 +1,4 @@
-// Day 1: InverseCaptcha.h
+// Day 1: InverseCaptcha.cpp
 // Definitions for the class that determines the inverse captcha.
 
 #include "InverseCaptcha.h"
@@ -11,13 +11,13 @@ Biendeo::AdventOfCode2017::Day1::InverseCaptcha::InverseCaptcha(const std::strin
 
 int Biendeo::AdventOfCode2017::Day1::InverseCaptcha::Sum() {
 	if (!calculatedSum) {
-		sum = calculateSum();
+		sum = CalculateSum();
 		calculatedSum = true;
 	}
 	return sum;
 }
 
-int Biendeo::AdventOfCode2017::Day1::InverseCaptcha::calculateSum() {
+int Biendeo::AdventOfCode2017::Day1::InverseCaptcha::CalculateSum() {
 	int currentSum = 0;
 #ifndef AOC_PART2
 	// For part 1, just detect if the next number is the same and add it. This cycles around at the
