@@ -4,10 +4,12 @@
 #include "SpiralMemory.h"
 
 #include <cmath>
-#include <iostream>
+#include <map>
 
 Biendeo::AdventOfCode2017::Day3::SpiralMemory::SpiralMemory(int targetSquare) {
 	this->targetSquare = targetSquare;
+	this->generatedValues.insert(std::make_pair(Pos2(0, 0), 1));
+	this->generatedValues.insert(std::make_pair(Pos2(1, 0), 1));
 }
 
 int Biendeo::AdventOfCode2017::Day3::SpiralMemory::StepsToTarget() {
@@ -28,31 +30,30 @@ int Biendeo::AdventOfCode2017::Day3::SpiralMemory::FirstGreaterSquare() {
 
 int Biendeo::AdventOfCode2017::Day3::SpiralMemory::CalculateStepsToTarget() {
 	// Brute force calculating this isn't too bad until you get into the billions.
-	int x = 0;
-	int y = 0;
+	Pos2 pos(0, 0);
 	int ring = 0;
 	Direction direction = Direction::Right;
 
 	for (int currentSquare = 1; currentSquare < targetSquare; ++currentSquare) {
 		// At a corner...
-		if (std::abs(x) == ring && std::abs(y) == ring) {
+		if (std::abs(pos.x) == ring && std::abs(pos.y) == ring) {
 			switch (direction) {
 				case Direction::Up:
-					--x;
+					--pos.x;
 					direction = Direction::Left;
 					break;
 				case Direction::Left:
-					--y;
+					--pos.y;
 					direction = Direction::Down;
 					break;
 				case Direction::Down:
-					++x;
+					++pos.x;
 					direction = Direction::Right;
 					break;
 				case Direction::Right:
 					// When going right at a corner, we go over one more space to move to the next
 					// ring.
-					++x;
+					++pos.x;
 					++ring;
 					direction = Direction::Up;
 					break;
@@ -61,50 +62,49 @@ int Biendeo::AdventOfCode2017::Day3::SpiralMemory::CalculateStepsToTarget() {
 		} else {
 			switch (direction) {
 				case Direction::Up:
-					++y;
+					++pos.y;
 					break;
 				case Direction::Left:
-					--x;
+					--pos.x;
 					break;
 				case Direction::Down:
-					--y;
+					--pos.y;
 					break;
 				case Direction::Right:
-					++x;
+					++pos.x;
 					break;
 			}
 		}
 	}
 
-	return std::abs(x) + std::abs(y);
+	return std::abs(pos.x) + std::abs(pos.y);
 }
 
 int Biendeo::AdventOfCode2017::Day3::SpiralMemory::CalculateFirstGreaterSquare() {
 	// This is very copy-paste, there's gotta be a better way to do this.
-	int x = 0;
-	int y = 0;
+	Pos2 pos(0, 0);
 	int ring = 0;
 	Direction direction = Direction::Right;
 
 	int lastValue = 1;
 
 	while (lastValue <= targetSquare) {
-		if (std::abs(x) == ring && std::abs(y) == ring) {
+		if (std::abs(pos.x) == ring && std::abs(pos.y) == ring) {
 			switch (direction) {
 				case Direction::Up:
-					--x;
+					--pos.x;
 					direction = Direction::Left;
 					break;
 				case Direction::Left:
-					--y;
+					--pos.y;
 					direction = Direction::Down;
 					break;
 				case Direction::Down:
-					++x;
+					++pos.x;
 					direction = Direction::Right;
 					break;
 				case Direction::Right:
-					++x;
+					++pos.x;
 					++ring;
 					direction = Direction::Up;
 					break;
@@ -112,68 +112,63 @@ int Biendeo::AdventOfCode2017::Day3::SpiralMemory::CalculateFirstGreaterSquare()
 		} else {
 			switch (direction) {
 				case Direction::Up:
-					++y;
+					++pos.y;
 					break;
 				case Direction::Left:
-					--x;
+					--pos.x;
 					break;
 				case Direction::Down:
-					--y;
+					--pos.y;
 					break;
 				case Direction::Right:
-					++x;
+					++pos.x;
 					break;
 			}
 		}
-		lastValue = GetValueAtSquare(x, y);
+		lastValue = GetValueAtSquare(pos);
+		generatedValues.insert(std::make_pair(pos, lastValue));
 	}
 
 	return lastValue;
 }
 
-int Biendeo::AdventOfCode2017::Day3::SpiralMemory::GetValueAtSquare(int x, int y) {
-	// While caching might be nice (such as storing these values in a map), a recursive system seems
-	// to be the quickest to implement. Caching would make this much less hideous though, and would
-	// save a lot of re-calculations. It may also be interesting to implement this as a constexpr.
-
-	// Base cases.
-	if (x == 0 && y == 0) {
-		return 1;
-	} else if (x == 1 && y == 0) {
-		return 1;
-	} else if (x == -y + 1 && y < 0) {
-		// The first value in each ring only needs to get the square to the left and up-left. The
-		// exception is (1, 0), which doesn't define up-left, so it's just left, which is the
-		// centre.
-		return GetValueAtSquare(x - 1, y) + GetValueAtSquare(x - 1, y + 1);
-	} else if (std::abs(x) == std::abs(y)) {
-		// Corners:
-		if (x > 0 && y > 0) {
-			// The top-right corner needs to get the squares down and down-left.
-			return GetValueAtSquare(x, y - 1) + GetValueAtSquare(x - 1, y - 1);
-		} else if (x < 0 && y > 0) {
-			// The top-left corner needs to get the squares right and down-right.
-			return GetValueAtSquare(x + 1, y) + GetValueAtSquare(x + 1, y - 1);
-		} else if (x < 0 && y < 0) {
-			// The bottom-left corner needs to get the squares up and up-right.
-			return GetValueAtSquare(x, y + 1) + GetValueAtSquare(x + 1, y + 1);
-		} else {
-			// The bottom-right corner needs to get the squares left, up-left, and up.
-			return GetValueAtSquare(x - 1, y) + GetValueAtSquare(x - 1, y + 1) + GetValueAtSquare(x, y + 1);
-		}
+int Biendeo::AdventOfCode2017::Day3::SpiralMemory::GetValueAtSquare(Pos2 pos) {
+	if (generatedValues.find(pos) != generatedValues.end()) {
+		return generatedValues.at(pos);
 	} else {
-		if (x > 0 && x > std::abs(y)) {
-			// The right side needs to get the squares left, down-left, and down and sometimes up-left.
-			return GetValueAtSquare(x - 1, y) + GetValueAtSquare(x - 1, y - 1) + GetValueAtSquare(x, y - 1) + (x != y + 1 ? GetValueAtSquare(x - 1, y + 1) : 0);
-		} else if (y > 0 && std::abs(x) < y) {
-			// The top side needs to get the squares down, down-right, and right and sometimes down-left.
-			return GetValueAtSquare(x, y - 1) + GetValueAtSquare(x + 1, y - 1) + GetValueAtSquare(x + 1, y) + (-x != y - 1 ? GetValueAtSquare(x - 1, y - 1) : 0);
-		} else if (x < 0 && x < y) {
-			// The left side needs to get the squares right, up-right, and up and sometimes down-right.
-			return GetValueAtSquare(x + 1, y) + GetValueAtSquare(x + 1, y + 1) + GetValueAtSquare(x, y + 1) + (x != y - 1 ? GetValueAtSquare(x + 1, y - 1) : 0);
+		if (pos.x == -pos.y + 1 && pos.y < 0) {
+			// The first value in each ring only needs to get the square to the left and up-left. The
+			// exception is (1, 0), which doesn't define up-left, so it's just left, which is the
+			// centre.
+			return generatedValues.at(Pos2(pos.x - 1, pos.y)) + generatedValues.at(Pos2(pos.x - 1, pos.y + 1));
+		} else if (std::abs(pos.x) == std::abs(pos.y)) {
+			if (pos.x > 0 && pos.y > 0) {
+				// The top-right corner needs to get the squares down and down-left.
+				return generatedValues.at(Pos2(pos.x, pos.y - 1)) + generatedValues.at(Pos2(pos.x - 1, pos.y - 1));
+			} else if (pos.x < 0 && pos.y > 0) {
+				// The top-left corner needs to get the squares right and down-right.
+				return generatedValues.at(Pos2(pos.x + 1, pos.y)) + generatedValues.at(Pos2(pos.x + 1, pos.y - 1));
+			} else if (pos.x < 0 && pos.y < 0) {
+				// The bottom-left corner needs to get the squares up and up-right.
+				return generatedValues.at(Pos2(pos.x, pos.y + 1)) + generatedValues.at(Pos2(pos.x + 1, pos.y + 1));
+			} else {
+				// The bottom-right corner needs to get the squares left, up-left, and up.
+				return generatedValues.at(Pos2(pos.x - 1, pos.y)) + generatedValues.at(Pos2(pos.x - 1, pos.y + 1)) + generatedValues.at(Pos2(pos.x, pos.y + 1));
+			}
 		} else {
-			// The bottom side needs to get the squares up, up-left, and left and sometimes up-right.
-			return GetValueAtSquare(x, y + 1) + GetValueAtSquare(x - 1, y + 1) + GetValueAtSquare(x - 1, y) + (x != y - 1 ? GetValueAtSquare(x + 1, y + 1) : 0);
+			if (pos.x > 0 && pos.x > std::abs(pos.y)) {
+				// The right side needs to get the squares left, down-left, and down and sometimes up-left.
+				return generatedValues.at(Pos2(pos.x - 1, pos.y)) + generatedValues.at(Pos2(pos.x - 1, pos.y - 1)) + generatedValues.at(Pos2(pos.x, pos.y - 1)) + (pos.x != pos.y + 1 ? generatedValues.at(Pos2(pos.x - 1, pos.y + 1)) : 0);
+			} else if (pos.y > 0 && std::abs(pos.x) < pos.y) {
+				// The top side needs to get the squares down, down-right, and right and sometimes down-left.
+				return generatedValues.at(Pos2(pos.x, pos.y - 1)) + generatedValues.at(Pos2(pos.x + 1, pos.y - 1)) + generatedValues.at(Pos2(pos.x + 1, pos.y)) + (-pos.x != pos.y - 1 ? generatedValues.at(Pos2(pos.x - 1, pos.y - 1)) : 0);
+			} else if (pos.x < 0 && pos.x < pos.y) {
+				// The left side needs to get the squares right, up-right, and up and sometimes down-right.
+				return generatedValues.at(Pos2(pos.x + 1, pos.y)) + generatedValues.at(Pos2(pos.x + 1, pos.y + 1)) + generatedValues.at(Pos2(pos.x, pos.y + 1)) + (pos.x != pos.y - 1 ? generatedValues.at(Pos2(pos.x + 1, pos.y - 1)) : 0);
+			} else {
+				// The bottom side needs to get the squares up, up-left, and left and sometimes up-right.
+				return generatedValues.at(Pos2(pos.x, pos.y + 1)) + generatedValues.at(Pos2(pos.x - 1, pos.y + 1)) + generatedValues.at(Pos2(pos.x - 1, pos.y)) + (pos.x != pos.y - 1 ? generatedValues.at(Pos2(pos.x + 1, pos.y + 1)) : 0);
+			}
 		}
 	}
 }

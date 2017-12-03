@@ -1,6 +1,7 @@
 // Day 3: SpiralMemory.h
 // Declarations for the class that determines the spiral path.
 
+#include <map>
 #include <string>
 #include <vector>
 
@@ -36,10 +37,26 @@ namespace Biendeo::AdventOfCode2017::Day3 {
 			Right
 		};
 
+		struct Pos2 {
+			Pos2(int x, int y) {
+				this->x = x;
+				this->y = y;
+			}
+
+			friend bool operator<(const Pos2& a, const Pos2& b) {
+				return a.x == b.x ? a.y < b.y : a.x < b.x;
+			}
+
+			int x;
+			int y;
+		};
+
 		int targetSquare;
 
 		struct CachedValue part1Cache;
 		struct CachedValue part2Cache;
+
+		std::map<Pos2, int> generatedValues;
 
 		/// Calculates the number of steps. This doesn't cache it.
 		int CalculateStepsToTarget();
@@ -48,6 +65,6 @@ namespace Biendeo::AdventOfCode2017::Day3 {
 		int CalculateFirstGreaterSquare();
 
 		/// Finds the value of the square at the given positions.
-		int GetValueAtSquare(int x, int y);
+		int GetValueAtSquare(Pos2 pos);
 	};
 }
