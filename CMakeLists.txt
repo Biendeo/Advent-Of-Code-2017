@@ -13,3 +13,4 @@ endif()
 
 add_subdirectory("src/Day 1 - Inverse Captcha")
 add_subdirectory("src/Day 2 - Corruption Checksum")
+add_subdirectory("src/Day 3 - Spiral Memory")

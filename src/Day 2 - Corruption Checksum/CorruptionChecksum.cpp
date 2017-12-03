@@ -1,4 +1,4 @@
-// Day 2 CorruptionChecksum.cpp
+// Day 2: CorruptionChecksum.cpp
 // Definitions for the class that determines the corruption checksum.
 
 #include "CorruptionChecksum.h"
