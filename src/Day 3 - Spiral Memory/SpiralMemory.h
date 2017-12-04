@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "CachedValue.h"
+
 // I've noticed all three days so far have very similar setups. Perhaps I should generalise it.
 
 namespace Biendeo::AdventOfCode2017::Day3 {
@@ -21,15 +23,6 @@ namespace Biendeo::AdventOfCode2017::Day3 {
 		int FirstGreaterSquare();
 
 		private:
-		struct CachedValue {
-			CachedValue() {
-				this->calculated = false;
-			}
-
-			bool calculated;
-			int value;
-		};
-
 		enum class Direction {
 			Up,
 			Left,
@@ -53,8 +46,8 @@ namespace Biendeo::AdventOfCode2017::Day3 {
 
 		int targetSquare;
 
-		struct CachedValue part1Cache;
-		struct CachedValue part2Cache;
+		CachedValue<int> cacheOne;
+		CachedValue<int> cacheTwo;
 
 		std::map<Pos2, int> generatedValues;
 

@@ -1,7 +1,6 @@
 // Day 4: HighEntropyPassphrase.h
 // Declarations for the class that determines the validity of passphrases.
 
-#include <functional>
 #include <string>
 #include <vector>
 

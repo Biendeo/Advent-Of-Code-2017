@@ -1,6 +1,6 @@
 # Day 4
 
-set(SourceFiles Main.cpp HighEntropyPassphrase.cpp)
+set(SourceFiles HighEntropyPassphrase.cpp Main.cpp)
 set(HeaderFiles HighEntropyPassphrase.h)
 
 add_executable(Day04-1 ${SourceFiles} ${HeaderFiles})

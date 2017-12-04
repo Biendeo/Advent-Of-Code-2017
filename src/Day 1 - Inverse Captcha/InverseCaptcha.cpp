@@ -6,15 +6,12 @@
 Biendeo::AdventOfCode2017::Day1::InverseCaptcha::InverseCaptcha(const std::string& inputString) {
 	this->inputString = inputString;
 	this->length = inputString.size();
-	this->calculatedSum = false;
 }
 
 int Biendeo::AdventOfCode2017::Day1::InverseCaptcha::Sum() {
-	if (!calculatedSum) {
-		sum = CalculateSum();
-		calculatedSum = true;
-	}
-	return sum;
+	return cache.Get([&] {
+		return CalculateSum();
+	});
 }
 
 int Biendeo::AdventOfCode2017::Day1::InverseCaptcha::CalculateSum() {

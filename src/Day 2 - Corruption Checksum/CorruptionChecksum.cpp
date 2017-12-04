@@ -7,38 +7,28 @@
 #include <limits>
 #include <string>
 
+#include "StringFunctions.h"
+
 Biendeo::AdventOfCode2017::Day2::CorruptionChecksum::CorruptionChecksum(const std::string& inputFile) {
 	std::ifstream f(inputFile);
 	std::string line;
 
 	while (std::getline(f, line)) {
-		std::vector<int> currentRow;
-		std::string currentTerm;
-		for (auto c : line) {
-			// In the example, the separating characters were spaces, but in the input, they're
-			// tabs. Tweak this if the input changes.
-			if (c != '\t') {
-				currentTerm += c;
-			} else {
-				currentRow.push_back(std::stoi(currentTerm));
-				currentTerm = "";
-			}
+		std::vector<std::string> currentRowStr = Split(line, '\t');
+		std::vector<int> currentRowInt;
+		for (const std::string& term : currentRowStr) {
+			currentRowInt.push_back(std::stoi(term));
 		}
-		// I'm relying on the fact that each row has at least one element and does not have any
-		// trailing characters.
-		currentRow.push_back(std::stoi(currentTerm));
-		spreadsheet.push_back(currentRow);
+		spreadsheet.push_back(currentRowInt);
 	}
 
 	f.close();
 }
 
 int Biendeo::AdventOfCode2017::Day2::CorruptionChecksum::ChecksumOne() {
-	if (!checksumOne.calculated) {
-		checksumOne.value = CalculateChecksumOne();
-		checksumOne.calculated = true;
-	}
-	return checksumOne.value;
+	return cacheOne.Get([&] {
+		return CalculateChecksumOne();
+	});
 }
 
 int Biendeo::AdventOfCode2017::Day2::CorruptionChecksum::CalculateChecksumOne() {
@@ -62,11 +52,9 @@ int Biendeo::AdventOfCode2017::Day2::CorruptionChecksum::CalculateChecksumOne() 
 }
 
 int Biendeo::AdventOfCode2017::Day2::CorruptionChecksum::ChecksumTwo() {
-	if (!checksumTwo.calculated) {
-		checksumTwo.value = CalculateChecksumTwo();
-		checksumTwo.calculated = true;
-	}
-	return checksumTwo.value;
+	return cacheTwo.Get([&] {
+		return CalculateChecksumTwo();
+	});
 }
 
 int Biendeo::AdventOfCode2017::Day2::CorruptionChecksum::CalculateChecksumTwo() {

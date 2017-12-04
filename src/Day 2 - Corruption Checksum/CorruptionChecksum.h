@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "CachedValue.h"
+
 namespace Biendeo::AdventOfCode2017::Day2 {
 	class CorruptionChecksum {
 		public:
@@ -19,20 +21,11 @@ namespace Biendeo::AdventOfCode2017::Day2 {
 		int ChecksumTwo();
 
 		private:
-		// This just encasulates the values here.
-		struct Checksum {
-			Checksum() {
-				this->calculated = false;
-			}
-
-			bool calculated;
-			int value;
-		};
 
 		std::vector<std::vector<int>> spreadsheet;
 
-		struct Checksum checksumOne;
-		struct Checksum checksumTwo;
+		CachedValue<int> cacheOne;
+		CachedValue<int> cacheTwo;
 
 		/// Calculates the first checksum and returns it as a value. This doesn't cache it.
 		int CalculateChecksumOne();

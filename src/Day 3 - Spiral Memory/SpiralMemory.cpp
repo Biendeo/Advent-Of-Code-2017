@@ -13,19 +13,15 @@ Biendeo::AdventOfCode2017::Day3::SpiralMemory::SpiralMemory(int targetSquare) {
 }
 
 int Biendeo::AdventOfCode2017::Day3::SpiralMemory::StepsToTarget() {
-	if (!part1Cache.calculated) {
-		part1Cache.value = CalculateStepsToTarget();
-		part1Cache.calculated = true;
-	}
-	return part1Cache.value;
+	return cacheOne.Get([&] {
+		return CalculateStepsToTarget();
+	});
 }
 
 int Biendeo::AdventOfCode2017::Day3::SpiralMemory::FirstGreaterSquare() {
-	if (!part2Cache.calculated) {
-		part2Cache.value = CalculateFirstGreaterSquare();
-		part2Cache.calculated = true;
-	}
-	return part2Cache.value;
+	return cacheTwo.Get([&] {
+		return CalculateFirstGreaterSquare();
+	});
 }
 
 int Biendeo::AdventOfCode2017::Day3::SpiralMemory::CalculateStepsToTarget() {

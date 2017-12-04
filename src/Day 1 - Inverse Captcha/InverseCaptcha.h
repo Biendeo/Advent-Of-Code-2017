@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "CachedValue.h"
+
 namespace Biendeo::AdventOfCode2017::Day1 {
 	class InverseCaptcha {
 		public:
@@ -19,9 +21,7 @@ namespace Biendeo::AdventOfCode2017::Day1 {
 		// This is just for convenience, the string should also know this.
 		size_t length;
 
-		// If the sum has been calculated already, there's no point recalculating it.
-		bool calculatedSum;
-		int sum;
+		CachedValue<int> cache;
 
 		/// Calculates the sum and returns it as a value. This doesn't cache it.
 		int CalculateSum();
