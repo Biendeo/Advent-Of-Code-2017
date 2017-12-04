@@ -13,4 +13,4 @@ Take in a file of integers separated by tabs (given as a commandline argument), 
 Take in an integer and compute a value of a kind (either the Manhatten Distance or the next greatest value) based on that.
 
 ### Day 4: High-Entropy Passphrases
-BLAH
+Take in a file of passphrases (lower-case character strings separated by spaces) (given as a commandline argument), and computes how many of those are valid.
