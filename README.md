@@ -11,3 +11,6 @@ Take in a file of integers separated by tabs (given as a commandline argument), 
 
 ### Day 3: Spiral Memory
 Take in an integer and compute a value of a kind (either the Manhatten Distance or the next greatest value) based on that.
+
+### Day 4: High-Entropy Passphrases
+BLAH
