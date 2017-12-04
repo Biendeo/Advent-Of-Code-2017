@@ -11,6 +11,9 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 	add_compile_options("/std:c++latest")
 endif()
 
+include_directories("src/Common/include")
+
+add_subdirectory("src/Common")
 add_subdirectory("src/Day 1 - Inverse Captcha")
 add_subdirectory("src/Day 2 - Corruption Checksum")
 add_subdirectory("src/Day 3 - Spiral Memory")
