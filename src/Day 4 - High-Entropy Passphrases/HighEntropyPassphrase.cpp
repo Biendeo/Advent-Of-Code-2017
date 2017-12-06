@@ -2,10 +2,11 @@
 // Definitions for the class that determines the validity of passphrases.
 
 #include "HighEntropyPassphrase.h"
-#include "StringFunctions.h"
 
 #include <algorithm>
 #include <fstream>
+
+#include "StringFunctions.h"
 
 Biendeo::AdventOfCode2017::Day4::HighEntropyPassphrase::HighEntropyPassphrase(const std::string& inputFile) {
 	std::ifstream f(inputFile);

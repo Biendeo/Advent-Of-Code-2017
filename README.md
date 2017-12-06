@@ -14,3 +14,6 @@ Take in an integer and compute a value of a kind (either the Manhatten Distance 
 
 ### Day 4: High-Entropy Passphrases
 Take in a file of passphrases (lower-case character strings separated by spaces) (given as a commandline argument), and computes how many of those are valid.
+
+### Day 5: A Maze of Twisty Trampolines, All Alike
+Take in a file of integers, and computes how many steps it takes to leave the system.
