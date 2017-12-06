@@ -17,3 +17,6 @@ Take in a file of passphrases (lower-case character strings separated by spaces)
 
 ### Day 5: A Maze of Twisty Trampolines, All Alike
 Take in a file of integers, and computes how many steps it takes to leave the system.
+
+### Day 6: Memory Reallocation
+Take in a file of one row of tab separated integers, and compute how many steps it takes to reach a duplicate state using certain rules.
