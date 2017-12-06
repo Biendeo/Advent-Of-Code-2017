@@ -2,6 +2,7 @@
 // Declarations for the class that calculates the number of steps to exit the maze.
 
 #include <array>
+#include <string>
 
 #include "CachedValue.h"
 

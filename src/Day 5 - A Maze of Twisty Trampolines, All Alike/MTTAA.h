@@ -1,6 +1,7 @@
 // Day 5: MTTAA.h
 // Declarations for the class that calculates the number of steps to exit the maze.
 
+#include <string>
 #include <vector>
 
 #include "CachedValue.h"
