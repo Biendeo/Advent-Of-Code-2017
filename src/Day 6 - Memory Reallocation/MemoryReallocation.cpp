@@ -56,11 +56,8 @@ std::pair<int, int> Biendeo::AdventOfCode2017::Day6::MemoryReallocation::Calcula
 		newBank[highestPos] = 0;
 		size_t pos = highestPos + 1;
 		for (int i = 0; i < currentBank[highestPos]; ++i) {
-			while (pos >= NUM_BANKS) {
-				pos -= NUM_BANKS;
-			}
-			// Doing ++newBank[pos] doesn't work, which is quite interesting.
-			newBank[pos] += 1;
+			// Doing ++newBank[pos % NUM_BANKS] doesn't work because of operator ordering.
+			newBank[pos %= NUM_BANKS] += 1;
 			++pos;
 		}
 		currentBank = newBank;
