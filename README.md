@@ -1,6 +1,8 @@
 # Advent-Of-Code-2017
 This is my attempt at solving each puzzle in the [Advent of Code 2017](http://adventofcode.com/2017) challenge. I've attempted all of these solutions using C++17.
 
+If you are also attempting the challenge, please try and solve these on your own first.
+
 I've never used CMake formally before, so I've tried to use it here. Each project should be broken up into two executables. I've made it so that the second part utilises the same codebase as the first part, but with the preprocessor definition `AOC_PART2` to separate them. Each day's task is listed down below.
 
 ### Day 1: Inverse Captcha
@@ -20,3 +22,6 @@ Take in a file of integers, and computes how many steps it takes to leave the sy
 
 ### Day 6: Memory Reallocation
 Take in a file of one row of tab separated integers, and compute how many steps it takes to reach a duplicate state using certain rules.
+
+### Day 7: Recursive Circus
+Take in a file describing a tree structure out of order, and compute the root node's name, and the correct value of an incorrect node.

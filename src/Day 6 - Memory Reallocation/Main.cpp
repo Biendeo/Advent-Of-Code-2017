@@ -23,6 +23,7 @@ int main(int argc, char* argv[]) {
 
 #ifndef AOC_PART2
 	std::cout << mr.Cycles().first << "\n";
+#else
 	std::cout << mr.Cycles().second << "\n";
 #endif
 
