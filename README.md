@@ -25,3 +25,6 @@ Take in a file of one row of tab separated integers, and compute how many steps 
 
 ### Day 7: Recursive Circus
 Take in a file describing a tree structure out of order, and compute the root node's name, and the correct value of an incorrect node.
+
+### Day 8: I Heard You Like Registers
+Take in a file describing register operations and conditions, and compute the highest value at the end, and at any point in the program.

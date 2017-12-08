@@ -4,7 +4,6 @@
 #include "RecursiveCircus.h"
 
 #include <fstream>
-#include <iostream>
 #include <queue>
 
 #include "StringFunctions.h"

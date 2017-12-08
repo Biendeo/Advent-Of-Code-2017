@@ -1,4 +1,4 @@
-// Day 7: Recursive Circus
+// Day 7: RecursiveCircus.h
 // Declarations for the class that recreates a tree.
 
 #include <map>
