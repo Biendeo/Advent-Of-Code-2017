@@ -28,3 +28,6 @@ Take in a file describing a tree structure out of order, and compute the root no
 
 ### Day 8: I Heard You Like Registers
 Take in a file describing register operations and conditions, and compute the highest value at the end, and at any point in the program.
+
+### Day 9: Stream Processing
+Take in a file of a stream of characters, and compute its score and the number of garbage characters in it.
