@@ -31,3 +31,6 @@ Take in a file describing register operations and conditions, and compute the hi
 
 ### Day 9: Stream Processing
 Take in a file of a stream of characters, and compute its score and the number of garbage characters in it.
+
+### Day 10: Knot Hash
+Take in a file of comma-separated integers, and compute a Knot Hash value based on that.
