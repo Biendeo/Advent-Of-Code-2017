@@ -32,8 +32,6 @@ int Biendeo::AdventOfCode2017::Day5::MTTAA::CalculateStepsToExit() {
 
 	while (currentPos >= 0 && currentPos < offsets.size()) {
 #ifdef AOC_PART2
-		++offsets[currentPos];
-		currentPos += offsets[currentPos] - 1;
 		if (offsets[currentPos] >= 3) {
 			--offsets[currentPos];
 			currentPos += offsets[currentPos] + 1;
