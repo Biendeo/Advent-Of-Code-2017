@@ -1,5 +1,5 @@
 // Day 11: HexEd.h
-// Declarations for the class that hashes the values.
+// Declarations for the class that determines hexagonal distances.
 
 #include <string>
 #include <vector>

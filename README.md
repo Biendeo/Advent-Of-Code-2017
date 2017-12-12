@@ -34,3 +34,9 @@ Take in a file of a stream of characters, and compute its score and the number o
 
 ### Day 10: Knot Hash
 Take in a file of comma-separated integers, and compute a Knot Hash value based on that.
+
+### Day 11: Hex Ed
+Take in a file of hexagonal directions, and compute how far away the path leads.
+
+### Day 12: Digital Plumber
+Take in a file of connections and determine how many are connected to a program.

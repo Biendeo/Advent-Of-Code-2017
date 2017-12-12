@@ -1,5 +1,5 @@
 // Day 11: HexEd.cpp
-// Definitions for the class that hashes the values.
+// Definitions for the class that determines hexagonal distances.
 
 #include "HexEd.h"
 

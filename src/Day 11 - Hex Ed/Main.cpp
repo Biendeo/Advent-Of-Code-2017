@@ -1,10 +1,10 @@
 // Day 11: Main.cpp
 // Just begins the program's execution. For this program, you must pass the input file as a
 // commandline argument to the program. That file will be read it. The file should be a single line
-// of comma separated integers.
+// of comma separated hexagonal directions.
 
-// This one actually was a pain to implement. The spec's a little vague on how it wants the input
-// and extra characters to be treated. This should get it out in the end.
+// This one wasn't that bad to implement. Like some days before, it was easier to compute both
+// results simultaneously and return the appropriate one.
 
 #include <iostream>
 
