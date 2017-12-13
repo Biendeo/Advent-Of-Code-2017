@@ -39,4 +39,7 @@ Take in a file of comma-separated integers, and compute a Knot Hash value based 
 Take in a file of hexagonal directions, and compute how far away the path leads.
 
 ### Day 12: Digital Plumber
-Take in a file of connections and determine how many are connected to a program.
+Take in a file of connections, and determine how many are connected to a program.
+
+### Day 13: Packet Scanners
+Take in a file of layer sizes, and determine the severity of the system and how much of a delay to use before passing through.

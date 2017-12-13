@@ -13,10 +13,10 @@ namespace Biendeo::AdventOfCode2017::Day12 {
 		/// Constructs a DigitalPlumber object with the given input file.
 		DigitalPlumber(const std::string& inputFile);
 
-		/// Returns how many steps the child is away. This result is cached.
+		/// Returns how many nodes are connected indirectly to 0. This result is cached.
 		int ConnectionsToZero();
 
-		/// Returns the furthest the child ever gets. This result is cached.
+		/// Returns how many groups are in the system. This result is cached.
 		int HowManyGroups();
 
 		private:
@@ -28,16 +28,13 @@ namespace Biendeo::AdventOfCode2017::Day12 {
 		CachedValue<int> connectionsToZeroCache;
 		CachedValue<int> groupsCache;
 
-		/// Calculates how many steps the child is away. This result is not cached.
-		int CalculateConnectionsToZero();
-
-		/// Calculates how many steps the child is away. This result is not cached.
+		/// Calculates how many groups there are in the system. This result is not cached.
 		int CalculateHowManyGroups();
 
 		/// Returns the set of people who are connected to the given person.
 		std::set<int> ConnectedTo(int source);
 
-		/// Stores the directions.
+		/// Stores the connections.
 		std::vector<Connection> connections;
 	};
 }
