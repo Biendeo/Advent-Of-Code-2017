@@ -1,12 +1,11 @@
 // Day 13: PacketScanner.cpp
-// Definitions for the class that times moving through sliding windows..
+// Definitions for the class that times moving through sliding windows.
 
 #include "PacketScanner.h"
 
 #include <fstream>
 
 #include "StringFunctions.h"
-#include "UtilityMath.h"
 
 Biendeo::AdventOfCode2017::Day13::PacketScanner::PacketScanner(const std::string& inputFile) {
 	std::ifstream f(inputFile);

@@ -43,3 +43,6 @@ Take in a file of connections, and determine how many are connected to a program
 
 ### Day 13: Packet Scanners
 Take in a file of layer sizes, and determine the severity of the system and how much of a delay to use before passing through.
+
+### Day 14: Disk Defragmentation
+Take in an input string, and, using the KnotHash algorithm, count the number of squares and regions in the grid.
