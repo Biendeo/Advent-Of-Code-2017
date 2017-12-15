@@ -46,3 +46,6 @@ Take in a file of layer sizes, and determine the severity of the system and how 
 
 ### Day 14: Disk Defragmentation
 Take in an input string, and, using the KnotHash algorithm, count the number of squares and regions in the grid.
+
+### Day 15: Dueling Generators
+Take in two starting values, and compute how many times the two generators match values.
