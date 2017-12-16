@@ -49,3 +49,6 @@ Take in an input string, and, using the KnotHash algorithm, count the number of 
 
 ### Day 15: Dueling Generators
 Take in two starting values, and compute how many times the two generators match values.
+
+### Day 16: Permutation Promenade
+Take in a file of instructions and compute the end state of a list of positions after those instructions.
