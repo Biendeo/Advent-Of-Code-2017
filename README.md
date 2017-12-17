@@ -52,3 +52,6 @@ Take in two starting values, and compute how many times the two generators match
 
 ### Day 16: Permutation Promenade
 Take in a file of instructions and compute the end state of a list of positions after those instructions.
+
+### Day 17: Spinlock
+Take in a step amount, and compute a circular buffer of integers based on that.
