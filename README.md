@@ -55,3 +55,6 @@ Take in a file of instructions and compute the end state of a list of positions 
 
 ### Day 17: Spinlock
 Take in a step amount, and compute a circular buffer of integers based on that.
+
+### Day 18: Duet
+Take in a file of instructions, and compute the first recovered value, and how many send operations occurred.
