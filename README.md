@@ -58,3 +58,6 @@ Take in a step amount, and compute a circular buffer of integers based on that.
 
 ### Day 18: Duet
 Take in a file of instructions, and compute the first recovered value, and how many send operations occurred.
+
+### Day 19: A Series of Tubes
+Take in a diagram and paths, and follow it to compute a string.
