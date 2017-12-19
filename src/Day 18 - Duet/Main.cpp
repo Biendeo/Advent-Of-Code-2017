@@ -3,7 +3,8 @@
 // commandline argument to the program. The file should describe the instructions that need to be
 // computed.
 
-// This one is another ifdef guard one.
+// This one was pretty complex to implement, just because of all the weird edge cases and my ability
+// to read instructions.
 
 #include <iostream>
 #include <string>

@@ -1,10 +1,9 @@
 // Day 18: Duet.cpp
-// Definitions for the class that computes end states for a set of instructions.
+// Definitions for the class that counts specific calls for a set of instructions.
 
 #include "Duet.h"
 
 #include <fstream>
-#include <iostream>
 
 #include "StringFunctions.h"
 
@@ -120,8 +119,7 @@ void Biendeo::AdventOfCode2017::Day18::Duet::Program::Next() {
 	}
 	successfulRecover = false;
 	waiting = false;
-	Instruction inst = instructions[programCounter];
-	// std::cout << programNumber << " - " << static_cast<int>(inst.type) << ", " << inst.parameter1.Value(registers) << ", " << inst.parameter2.Value(registers) << "\n";
+	Instruction inst = instructions[programCounter];\
 	switch (inst.type) {
 #ifndef AOC_PART2
 		case InstructionType::Sound:

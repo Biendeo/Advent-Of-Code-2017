@@ -1,5 +1,5 @@
 // Day 18: Duet.h
-// Declarations for the class that computes end states for a set of instructions.
+// Declarations for the class that counts specific calls for a set of instructions.
 
 #include <map>
 #include <queue>
