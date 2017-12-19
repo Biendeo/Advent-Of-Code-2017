@@ -121,7 +121,7 @@ void Biendeo::AdventOfCode2017::Day18::Duet::Program::Next() {
 	successfulRecover = false;
 	waiting = false;
 	Instruction inst = instructions[programCounter];
-	std::cout << programNumber << " - " << static_cast<int>(inst.type) << ", " << inst.parameter1.Value(registers) << ", " << inst.parameter2.Value(registers) << "\n";
+	// std::cout << programNumber << " - " << static_cast<int>(inst.type) << ", " << inst.parameter1.Value(registers) << ", " << inst.parameter2.Value(registers) << "\n";
 	switch (inst.type) {
 #ifndef AOC_PART2
 		case InstructionType::Sound:
@@ -139,21 +139,15 @@ void Biendeo::AdventOfCode2017::Day18::Duet::Program::Next() {
 		case InstructionType::Send:
 			sendQueue->push(inst.parameter1.Value(registers));
 			++sends;
-			// My answer is less than 10000, so this is a quick heads up that it's not working.
-			if (sends >= 10000) {
-				abort();
-			}
 			break;
 		case InstructionType::Receive:
 			if (receiveQueue.empty()) {
 				waiting = true;
 				--programCounter;
-			} else if (inst.parameter1.Value(registers) != 0) {
+			} else {
 				inst.parameter1.Value(registers) = receiveQueue.front();
-				if (receiveQueue.front() != 0) {
-					successfulRecover = true;
-					lastRecover = receiveQueue.front();
-				}
+				successfulRecover = true;
+				lastRecover = receiveQueue.front();
 				receiveQueue.pop();
 			}
 			break;
