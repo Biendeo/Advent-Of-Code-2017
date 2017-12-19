@@ -47,13 +47,25 @@ namespace Biendeo::AdventOfCode2017::Day18 {
 		};
 
 		struct Instruction {
-			Instruction(InstructionType type, bool twoRegisters, char reg1, char reg2, int value);
+			struct InstructionParameter {
+				InstructionParameter(char c);
+				InstructionParameter(int64_t i);
+				InstructionParameter() {}
+
+				int64_t& Value(std::map<char, int64_t>& registers);
+
+				private:
+				bool isRegister;
+				char reg;
+				int64_t value;
+
+			};
+
+			Instruction(InstructionType type, const std::string& parameter1, const std::string& parameter2);
 
 			InstructionType type;
-			bool twoRegisters;
-			char reg1;
-			char reg2;
-			int value;
+			InstructionParameter parameter1;
+			InstructionParameter parameter2;
 		};
 
 		class Program {
@@ -84,6 +96,7 @@ namespace Biendeo::AdventOfCode2017::Day18 {
 			// For part 2.
 			bool waiting;
 			int64_t sends;
+			int64_t programNumber;
 		};
 
 		std::vector<Instruction> instructions;

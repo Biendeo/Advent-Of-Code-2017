@@ -4,6 +4,7 @@
 #include "Duet.h"
 
 #include <fstream>
+#include <iostream>
 
 #include "StringFunctions.h"
 
@@ -14,39 +15,17 @@ Biendeo::AdventOfCode2017::Day18::Duet::Duet(const std::string& inputFile) {
 		std::vector<std::string> splitString = Split(str, ' ');
 		if (splitString[0] == "snd") {
 #ifndef AOC_PART2
-			instructions.emplace_back(InstructionType::Sound, false, splitString[1][0], '?', -1);
+			instructions.emplace_back(InstructionType::Sound, splitString[1], "?");
 #else
-			// The send instruction can either be a register or an integer, and has to be handled
-			// separately here.
-			bool twoRegisters = true;
-			try {
-				std::stoi(splitString[1]);
-				twoRegisters = false;
-			} catch (const std::exception& e) {
-				// Nothing.
-				static_cast<void>(e);
-			}
-			if (twoRegisters) {
-				instructions.emplace_back(InstructionType::Send, twoRegisters, '?', splitString[1][0], -1);
-			} else {
-				instructions.emplace_back(InstructionType::Send, twoRegisters, '?', '?', std::stoi(splitString[1]));
-			}
+			instructions.emplace_back(InstructionType::Send, splitString[1], "?");
 #endif
 		} else if (splitString[0] == "rcv") {
 #ifndef AOC_PART2
-			instructions.emplace_back(InstructionType::Recover, false, splitString[1][0], '?', -1);
+			instructions.emplace_back(InstructionType::Recover, splitString[1], "?");
 #else
-			instructions.emplace_back(InstructionType::Receive, false, splitString[1][0], '?', -1);
+			instructions.emplace_back(InstructionType::Receive, splitString[1], "?");
 #endif
 		} else {
-			bool twoRegisters = true;
-			try {
-				std::stoi(splitString[2]);
-				twoRegisters = false;
-			} catch (const std::exception& e) {
-				// Nothing.
-				static_cast<void>(e);
-			}
 			InstructionType it;
 			if (splitString[0] == "set") {
 				it = InstructionType::Set;
@@ -59,11 +38,7 @@ Biendeo::AdventOfCode2017::Day18::Duet::Duet(const std::string& inputFile) {
 			} else if (splitString[0] == "jgz") {
 				it = InstructionType::Jump;
 			}
-			if (twoRegisters) {
-				instructions.emplace_back(it, twoRegisters, splitString[1][0], splitString[2][0], -1);
-			} else {
-				instructions.emplace_back(it, twoRegisters, splitString[1][0], '?', std::stoi(splitString[2]));
-			}
+			instructions.emplace_back(it, splitString[1], splitString[2]);
 		}
 	}
 	f.close();
@@ -100,16 +75,24 @@ int64_t Biendeo::AdventOfCode2017::Day18::Duet::CalculateProgramOneSends() {
 		one.Next();
 		two.Next();
 	}
-	return one.Sends();
+	return two.Sends();
 }
 
 
-Biendeo::AdventOfCode2017::Day18::Duet::Instruction::Instruction(InstructionType type, bool twoRegisters, char reg1, char reg2, int value) {
-	this->twoRegisters = twoRegisters;
+Biendeo::AdventOfCode2017::Day18::Duet::Instruction::Instruction(InstructionType type, const std::string& parameter1, const std::string& parameter2) {
 	this->type = type;
-	this->reg1 = reg1;
-	this->reg2 = reg2;
-	this->value = value;
+	try {
+		this->parameter1 = InstructionParameter(static_cast<int64_t>(std::stol(parameter1)));
+	} catch (const std::exception& e) {
+		static_cast<void>(e);
+		this->parameter1 = InstructionParameter(parameter1[0]);
+	}
+	try {
+		this->parameter2 = InstructionParameter(static_cast<int64_t>(std::stol(parameter2)));
+	} catch (const std::exception& e) {
+		static_cast<void>(e);
+		this->parameter2 = InstructionParameter(parameter2[0]);
+	}
 }
 
 Biendeo::AdventOfCode2017::Day18::Duet::Program::Program(const std::vector<Instruction>& instructions, int64_t programId) : instructions(instructions) {
@@ -123,6 +106,7 @@ Biendeo::AdventOfCode2017::Day18::Duet::Program::Program(const std::vector<Instr
 	lastRecover = 0;
 	waiting = false;
 	sends = 0;
+	programNumber = programId;
 }
 
 void Biendeo::AdventOfCode2017::Day18::Duet::Program::SynchroniseQueues(Program& p) {
@@ -137,18 +121,15 @@ void Biendeo::AdventOfCode2017::Day18::Duet::Program::Next() {
 	successfulRecover = false;
 	waiting = false;
 	Instruction inst = instructions[programCounter];
-	int value = inst.value;
-	if (inst.twoRegisters) {
-		value = registers[inst.reg2];
-	}
+	std::cout << programNumber << " - " << static_cast<int>(inst.type) << ", " << inst.parameter1.Value(registers) << ", " << inst.parameter2.Value(registers) << "\n";
 	switch (inst.type) {
 #ifndef AOC_PART2
 		case InstructionType::Sound:
-			lastRecover = registers[inst.reg1];
+			lastRecover = inst.parameter1.Value(registers);
 			break;
 		case InstructionType::Recover:
-			if (lastRecover != 0 && registers[inst.reg1] != 0) {
-				registers[inst.reg1] = lastRecover;
+			if (lastRecover != 0 && inst.parameter1.Value(registers) != 0) {
+				inst.parameter1.Value(registers) = lastRecover;
 				if (lastRecover != 0) {
 					successfulRecover = true;
 				}
@@ -156,7 +137,7 @@ void Biendeo::AdventOfCode2017::Day18::Duet::Program::Next() {
 			break;
 #else
 		case InstructionType::Send:
-			sendQueue->push(value);
+			sendQueue->push(inst.parameter1.Value(registers));
 			++sends;
 			// My answer is less than 10000, so this is a quick heads up that it's not working.
 			if (sends >= 10000) {
@@ -167,8 +148,8 @@ void Biendeo::AdventOfCode2017::Day18::Duet::Program::Next() {
 			if (receiveQueue.empty()) {
 				waiting = true;
 				--programCounter;
-			} else if (registers[inst.reg1] != 0) {
-				registers[inst.reg1] = receiveQueue.front();
+			} else if (inst.parameter1.Value(registers) != 0) {
+				inst.parameter1.Value(registers) = receiveQueue.front();
 				if (receiveQueue.front() != 0) {
 					successfulRecover = true;
 					lastRecover = receiveQueue.front();
@@ -178,22 +159,22 @@ void Biendeo::AdventOfCode2017::Day18::Duet::Program::Next() {
 			break;
 #endif
 		case InstructionType::Set:
-			registers[inst.reg1] = value;
+			inst.parameter1.Value(registers) = inst.parameter2.Value(registers);
 			break;
 		case InstructionType::Add:
-			registers[inst.reg1] += value;
+			inst.parameter1.Value(registers) += inst.parameter2.Value(registers);
 			break;
 		case InstructionType::Multiply:
-			registers[inst.reg1] *= value;
+			inst.parameter1.Value(registers) *= inst.parameter2.Value(registers);
 			break;
 		case InstructionType::Modulo:
-			if (value != 0) {
-				registers[inst.reg1] %= value;
+			if (inst.parameter2.Value(registers) != 0) {
+				inst.parameter1.Value(registers) %= inst.parameter2.Value(registers);
 			}
 			break;
 		case InstructionType::Jump:
-			if (registers[inst.reg1] > 0) {
-				programCounter += (value - 1);
+			if (inst.parameter1.Value(registers) > 0) {
+				programCounter += (inst.parameter2.Value(registers) - 1);
 			}
 			break;
 	}
@@ -218,4 +199,24 @@ bool Biendeo::AdventOfCode2017::Day18::Duet::Program::IsWaiting() {
 
 int64_t Biendeo::AdventOfCode2017::Day18::Duet::Program::Sends() {
 	return sends;
+}
+
+Biendeo::AdventOfCode2017::Day18::Duet::Instruction::InstructionParameter::InstructionParameter(char c) {
+	isRegister = true;
+	reg = c;
+	value = -1;
+}
+
+Biendeo::AdventOfCode2017::Day18::Duet::Instruction::InstructionParameter::InstructionParameter(int64_t i) {
+	isRegister = false;
+	reg = '?';
+	value = i;
+}
+
+int64_t& Biendeo::AdventOfCode2017::Day18::Duet::Instruction::InstructionParameter::Value(std::map<char, int64_t>& registers) {
+	if (!isRegister) {
+		return value;
+	} else {
+		return registers[reg];
+	}
 }
