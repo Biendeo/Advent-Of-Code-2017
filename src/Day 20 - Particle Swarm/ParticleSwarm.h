@@ -1,5 +1,5 @@
 // Day 20: ParticleSwarm.h
-// Declarations for the class that computes end states for a set of instructions.
+// Declarations for the class that computes particle movements.
 
 #include <string>
 #include <vector>

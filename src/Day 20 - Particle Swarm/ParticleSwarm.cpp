@@ -1,5 +1,5 @@
 // Day 20: ParticleSwarm.cpp
-// Definitions for the class that computes end states for a set of instructions.
+// Definitions for the class that computes particle movements.
 
 #include "ParticleSwarm.h"
 

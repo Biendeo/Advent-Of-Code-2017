@@ -1,8 +1,9 @@
 // Day 20: Main.cpp
 // Just begins the program's execution. For this program, you must pass the input file as a
-// commandline argument to the program. The file should describe a diagram of paths.
+// commandline argument to the program. The file should describe list of particles in initial
+// states.
 
-// This one was much easier to implement.
+// This one was easy-ish to implement, but the actual end values were a bit tricky to compute.
 
 #include <iostream>
 #include <string>
