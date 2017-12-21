@@ -61,3 +61,6 @@ Take in a file of instructions, and compute the first recovered value, and how m
 
 ### Day 19: A Series of Tubes
 Take in a diagram and paths, and follow it to compute a string.
+
+### Day 20: Particle Swarm
+Take in a list of positions, velocities, and accelerations, and compute which is the closest to the origin.
